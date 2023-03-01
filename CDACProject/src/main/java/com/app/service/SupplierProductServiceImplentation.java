@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.app.entities.Category;
+import com.app.entities.Product;
 import com.app.entities.SupplierProducts;
+import com.app.repository.CategoryDao;
 import com.app.repository.SupplierProductsDao;
 
 @Service
@@ -18,6 +21,9 @@ public class SupplierProductServiceImplentation implements SupplierProductsServi
 //*********************dependency injection****************************************************************************	
 	@Autowired
 	private SupplierProductsDao supplierProductsRepo;
+	
+	@Autowired
+	private CategoryDao categoryRepo;
 
 	
 //*********************method implementation****************************************************************************	
@@ -32,8 +38,23 @@ public class SupplierProductServiceImplentation implements SupplierProductsServi
 	}
 
 	@Override
-	public SupplierProducts addSupplierProductsDetails(SupplierProducts transientSupplierProducts) {
-		return supplierProductsRepo.save(transientSupplierProducts);
+	public SupplierProducts addSupplierProductsDetails(SupplierProducts transientSupplierProduct) {
+		
+		//getting categoryId 
+		Long categoryId= transientSupplierProduct.getSupplierproductCategory().getId();
+		
+		//getting persistent Category
+		Optional<Category> persistentCategory= categoryRepo.findById(categoryId);
+		
+		//to avoid lazy initialization
+		persistentCategory.get().getCategoryName();
+		
+		//getting SupplierProductList & binding
+		List<SupplierProducts> supplierproductsList = persistentCategory.get().getSupplierProductsList();
+		supplierproductsList.add(transientSupplierProduct);
+		persistentCategory.get().setSupplierProductsList(supplierproductsList);
+		
+		return supplierProductsRepo.save(transientSupplierProduct);
 	}
 
 	@Override

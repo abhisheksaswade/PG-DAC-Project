@@ -29,9 +29,8 @@ public class Image extends BaseEntity {
 	//Owning & Inverse entities are mentioned respectively
 	//Images & Product	
 	@ToString.Exclude
-	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name="image_id")
+	@JoinColumn(name="product_id")
 	private Product product;
 	
 	

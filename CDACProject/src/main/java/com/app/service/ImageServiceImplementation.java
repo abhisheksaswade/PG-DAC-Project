@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.app.entities.Image;
+import com.app.entities.Product;
 import com.app.repository.ImageDao;
+import com.app.repository.ProductDao;
 
 @Service
 @Transactional
@@ -18,6 +20,9 @@ public class ImageServiceImplementation implements ImageService {
 //*********************dependency injection****************************************************************************	
 	@Autowired
 	private ImageDao imageRepo;
+	
+	@Autowired
+	private ProductDao productRepo;
 
 	
 //*********************method implementation****************************************************************************	
@@ -33,6 +38,21 @@ public class ImageServiceImplementation implements ImageService {
 
 	@Override
 	public Image addImageDetails(Image transientImage) {
+		
+		//getting productId 
+		Long productId= transientImage.getProduct().getId();
+		
+		//getting persistent Product
+		Optional<Product> persistentProduct= productRepo.findById(productId);
+		
+		//to avoid lazy initialization
+		persistentProduct.get().getProductName();
+		
+		//getting imageList & binding
+		List<Image> imageList = persistentProduct.get().getImage();
+		imageList.add(transientImage);
+		persistentProduct.get().setImage(imageList);
+		
 		return imageRepo.save(transientImage);
 	}
 

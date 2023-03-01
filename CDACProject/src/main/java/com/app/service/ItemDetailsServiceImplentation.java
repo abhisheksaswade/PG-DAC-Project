@@ -33,6 +33,7 @@ public class ItemDetailsServiceImplentation implements ItemDetailsService {
 
 	@Override
 	public ItemDetails addItemDetailsDetails(ItemDetails transientItemDetails) {
+		
 		return itemDetailsRepo.save(transientItemDetails);
 	}
 

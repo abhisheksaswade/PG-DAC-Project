@@ -9,6 +9,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -80,8 +81,11 @@ public class User extends BaseEntity{
 	joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")}, 
 	inverseJoinColumns = {@JoinColumn(name = "itemDetails_id", referencedColumnName = "id")})
 	List<ItemDetails> itemDetailsList = new ArrayList();
+
+
 	
 	
 //************************constructors************************************************************************************
+
 	
 }//End of User 
