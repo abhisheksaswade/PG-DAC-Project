@@ -45,7 +45,6 @@ public class MyOrder extends BaseEntity{
 	//Owning & Inverse entities are mentioned respectively
     //MyOrder & User= Customer
 	@ToString.Exclude
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="customer_id")
 	private User customer;
@@ -53,7 +52,6 @@ public class MyOrder extends BaseEntity{
 	
     //MyOrder & User= deliveryPerson
 	@ToString.Exclude
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="deliveryPerson_id")
 	private User deliveryPerson;

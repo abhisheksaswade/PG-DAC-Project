@@ -13,6 +13,7 @@ import com.app.repository.VehicleDao;
 @Service
 @Transactional
 public class VehicleServiceImplementation implements VehicleService {
+	
 
 //*********************dependency injection****************************************************************************	
 	@Autowired
@@ -20,26 +21,31 @@ public class VehicleServiceImplementation implements VehicleService {
 
 	
 //*********************method implementation****************************************************************************	
+	//GET ALL
 	@Override
 	public List<Vehicle> getAllVehicleDetails() {
 		return vehicleRepo.findAll();
 	}
 
+	//GET BY ID
 	@Override
 	public Optional<Vehicle> getVehicleDetails(Long vehicleId) {
 		return vehicleRepo.findById(vehicleId);
 	}
 
+	//INSERT
 	@Override
 	public Vehicle addVehicleDetails(Vehicle transientVehicle) {
 		return vehicleRepo.save(transientVehicle);
 	}
 
+	//UPDATE
 	@Override
 	public Vehicle updateVehicleDetails(Vehicle detachedVehicle) {
 		return vehicleRepo.save(detachedVehicle);
 	}
 
+	//DELETE
 	@Override
 	public String deleteVehicleDetails(Long vehicleId) {
 		if(vehicleRepo.existsById(vehicleId))
@@ -50,5 +56,6 @@ public class VehicleServiceImplementation implements VehicleService {
 
 		return "Vehicle Deletion Failed......";
 	}
+	
 		
 }//End of VehicleServiceImplementation

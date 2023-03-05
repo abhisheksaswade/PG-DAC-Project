@@ -34,16 +34,19 @@ public class ProductServiceImplementation implements ProductService {
 
 	
 //*********************method implementation****************************************************************************	
+	//GET ALL
 	@Override
 	public List<Product> getAllProductDetails() {
 		return productRepo.findAll();
 	}
 
+	//GET BY ID
 	@Override
 	public Optional<Product> getProductDetails(Long productId) {
 		return productRepo.findById(productId);
 	}
 
+	//INSERT
 	@Override
 	public Product addProductDetails(Product transientProduct) {
 		
@@ -61,14 +64,18 @@ public class ProductServiceImplementation implements ProductService {
 		productList.add(transientProduct);
 		persistentCategory.get().setProductsList(productList);
 		
+		transientProduct.setProductCategory(persistentCategory.get());
+		
 		return productRepo.save(transientProduct);
 	}
 
+	//UPDATE
 	@Override
 	public Product updateProductDetails(Product detachedProduct) {
 		return productRepo.save(detachedProduct);
 	}
 
+	//DELETE
 	@Override
 	public String deleteProductDetails(Long productId) {
 		
@@ -83,6 +90,7 @@ public class ProductServiceImplementation implements ProductService {
 
 
 //---------------------Custom method declaration for Administrator-----------------------------------------------
+	
 	//to get vehicle list by productId
 	@Override
 	public List<Vehicle> getVehicleListByProductId(Long productId) {
@@ -98,7 +106,8 @@ public class ProductServiceImplementation implements ProductService {
 		
 		//returning the categoryList for persistentUser
 		return vehicleList;
-	}
+		
+	}//End of getVehicleListByProductId
 
 	
 	//to Add vehicle by productID	
@@ -126,7 +135,8 @@ public class ProductServiceImplementation implements ProductService {
 		vehicleRepo.save(persistentVehicle.get());
 		
 		return "Vehicle added successfully....!";
-	}
+		
+	}//End of addVehicleByProductIdAndVehicle
 
 	
 	//to Delete vehicle by productID	
@@ -154,7 +164,7 @@ public class ProductServiceImplementation implements ProductService {
 		vehicleRepo.save(persistentVehicle.get());
 		
 		return "Vehicle Deleted Succesfully....!";
-	}
+	}//End of deleteVehicleByProductIdAndVehicle
 	
 	
 }//End of ProductService

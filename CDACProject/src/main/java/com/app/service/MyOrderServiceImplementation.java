@@ -7,8 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.app.entities.Category;
 import com.app.entities.MyOrder;
+import com.app.entities.Product;
+import com.app.entities.User;
 import com.app.repository.MyOrderDao;
+import com.app.repository.UserDao;
 
 @Service
 @Transactional
@@ -19,6 +23,8 @@ public class MyOrderServiceImplementation implements MyOrderService {
 	@Autowired
 	private MyOrderDao myOrderRepo;
 
+	@Autowired
+	private UserDao userRepo;
 	
 //*********************method implementation****************************************************************************	
 	@Override
@@ -33,6 +39,35 @@ public class MyOrderServiceImplementation implements MyOrderService {
 
 	@Override
 	public MyOrder addMyOrderDetails(MyOrder transientMyOrder) {
+		
+		//getting customerId & deliveryPersonId
+		Long customerId= transientMyOrder.getCustomer().getId();
+		Long deliveryPersonId= transientMyOrder.getDeliveryPerson().getId();
+		
+		//getting persistent User= customer & deliveryPerson
+		Optional<User> persistentCustomer= userRepo.findById(customerId);
+		Optional<User> persistentDeliveryPerson= userRepo.findById(deliveryPersonId);
+		
+		
+		//to avoid lazy initialization
+		persistentCustomer.get().getFirstName();
+		persistentDeliveryPerson.get().getFirstName();
+		
+		
+		//getting List & binding
+		List<MyOrder> myOrderList = persistentCustomer.get().getMyOrder_C();
+		myOrderList.add(transientMyOrder);
+		persistentCustomer.get().setMyOrder_C(myOrderList);
+		
+		transientMyOrder.setCustomer(persistentCustomer.get());
+		
+		List<MyOrder> myOrderList2 = persistentDeliveryPerson.get().getMyOrder_D();
+		myOrderList.add(transientMyOrder);
+		persistentDeliveryPerson.get().setMyOrder_D(myOrderList);
+		
+		transientMyOrder.setDeliveryPerson(persistentDeliveryPerson.get());
+		
+		
 		return myOrderRepo.save(transientMyOrder);
 	}
 
@@ -53,6 +88,18 @@ public class MyOrderServiceImplementation implements MyOrderService {
 		return "User Deletion Failed......";
 		
 	}
-
+	
+//---------------------Custom method declaration for Administrator-----------------------------------------------
+	
+	//to get order to be deliver/delivered by deliveryPerson based on order status
+	@Override
+	public List<MyOrder> deliveryPersonOrdersByOrderStatus(Long deliveryPersonId, Enum orderStatus) {
+		
+		Optional<User> deliveryPerson= userRepo.findById(deliveryPersonId);
+		
+		return myOrderRepo.findByDeliveryPersonAndOrderStatus(deliveryPerson.get(), orderStatus);
+	}
+	
+	
 	
 }//End of MyOrderServiceImplementation

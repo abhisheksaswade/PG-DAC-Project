@@ -40,11 +40,6 @@ public class Category extends BaseEntity {
 	@ManyToMany(mappedBy = "categoryList")
 	private List<User> userList = new ArrayList();
 
-	//SupplierProducts & category= for category id 
-	@ToString.Exclude
-	@JsonIgnore
-	@OneToMany(mappedBy = "supplierproductCategory", cascade = CascadeType.ALL, orphanRemoval = true)
-	private  List<SupplierProducts> supplierProductsList = new ArrayList();
 
 	//Product & category= for category id 
 	@ToString.Exclude

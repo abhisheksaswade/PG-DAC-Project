@@ -73,18 +73,12 @@ public class User extends BaseEntity{
 	inverseJoinColumns = {@JoinColumn(name = "category_id", referencedColumnName = "id")})
 	private List<Category> categoryList = new ArrayList();
 	
-	//User to Item_Details= for distributor
-	@ToString.Exclude
-	@JsonIgnore
-	@ManyToMany(cascade= CascadeType.ALL)
-	@JoinTable(name = "user_itemDetails", 
-	joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")}, 
-	inverseJoinColumns = {@JoinColumn(name = "itemDetails_id", referencedColumnName = "id")})
-	List<ItemDetails> itemDetailsList = new ArrayList();
-
-
 	
-	
+	//User to Supplied Products = product List
+		@ToString.Exclude
+		@JsonIgnore
+		@OneToMany (mappedBy = "distributor", cascade = CascadeType.ALL, orphanRemoval = true)
+		private List<SupplierProducts> supplierProducts = new ArrayList<SupplierProducts>();
 //************************constructors************************************************************************************
 
 	

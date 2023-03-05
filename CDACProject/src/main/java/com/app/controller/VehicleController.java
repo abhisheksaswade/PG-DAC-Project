@@ -40,13 +40,13 @@ public class VehicleController {
 		return vehicleService.getVehicleDetails(vehicleId);
 	}
 	
-	@PostMapping
+	@PostMapping("/add")
 	public Vehicle addVehicle(@RequestBody Vehicle transientVehicle)
 	{
 		return vehicleService.addVehicleDetails(transientVehicle);
 	}
 	
-	@PutMapping
+	@PutMapping("/edit")
 	public Vehicle updateVehicle(@RequestBody Vehicle detachedVehicle)
 	{
 		return vehicleService.updateVehicleDetails(detachedVehicle);

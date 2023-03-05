@@ -10,19 +10,26 @@ import com.app.entities.User;
 public interface UserService {
 //*********************method implementation****************************************************************************
 
-    //---------------------Standard method declaration-----------------------------------------------
 	
+//---------------------Standard method declaration-----------------------------------------------
+	
+	//GET ALL
 	public List<User> getAllUserDetails();
 	
+	//GET BY ID
 	public Optional<User> getUserDetails(Long userId);
 	
+	//INSERT
 	public User addUserDetails(User transientUser);
 	
+	//UPDATE
 	public User updateUserDetails(User detachedUser);
 	
+	//DELETE
 	public String deleteUserDetails(Long userId);
 	
-	//---------------------Custom method declaration for Administrator-----------------------------------------------
+	
+//---------------------Custom method declaration for Administrator-------------------------------
 	
 	//to get user list by roles
 	public List<User> getAllUserDetailsByRole(String role);
@@ -35,5 +42,7 @@ public interface UserService {
 	
 	//to Delete category by userID
 	public String deleteCategoryByUserIdAndCategory(Long userId, Category transientDeleteCategory);
-
+	
+	
+	
 }//End of UserService

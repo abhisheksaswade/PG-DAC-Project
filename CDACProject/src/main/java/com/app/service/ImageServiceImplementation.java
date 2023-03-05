@@ -26,16 +26,19 @@ public class ImageServiceImplementation implements ImageService {
 
 	
 //*********************method implementation****************************************************************************	
+	//GET ALL
 	@Override
 	public List<Image> getAllImageDetails() {
 		return imageRepo.findAll();
 	}
 
+	//GET BY ID
 	@Override
 	public Optional<Image> getImageDetails(Long imageId) {	
 		return imageRepo.findById(imageId);
 	}
 
+	//INSERT
 	@Override
 	public Image addImageDetails(Image transientImage) {
 		
@@ -53,14 +56,18 @@ public class ImageServiceImplementation implements ImageService {
 		imageList.add(transientImage);
 		persistentProduct.get().setImage(imageList);
 		
+		transientImage.setProduct(persistentProduct.get());
+		
 		return imageRepo.save(transientImage);
 	}
-
+	
+	//UPDATE
 	@Override
 	public Image updateImageDetails(Image detachedImage) {
 		return imageRepo.save(detachedImage);
 	}
 
+	//DELETE
 	@Override
 	public String deleteImageDetails(Long imageId) {
 		if(imageRepo.existsById(imageId))

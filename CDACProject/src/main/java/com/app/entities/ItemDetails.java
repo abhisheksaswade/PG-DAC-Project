@@ -26,31 +26,26 @@ import lombok.ToString;
 public class ItemDetails extends BaseEntity {
 
 	
-//************************data members***************************************************************************************
-	private String itemName;
-	
-	private double weight;
-	
+//************************data members***************************************************************************************	
 	private int quantity;
-	
 	private double price;
 	
 	
 //************************Entity Relations**********************************************************************************
 	//Owning & Inverse entities are mentioned respectively
 	
-    //User & ItemDetails= for distributor 
-	@ToString.Exclude
-	@JsonIgnore
-	@ManyToMany(mappedBy = "itemDetailsList")
-	private List<User> distributorList = new ArrayList();
-
     //ItemDetails & MyOrder= for MyOrder id 
 	@ToString.Exclude
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="order_id")
 	private MyOrder myorder;
+	
+	
+	//ItemDetails & SupplierProducts: for supplierProducts id
+	@ToString.Exclude
+	@ManyToOne
+	@JoinColumn(name="supplierproduct_id")
+	private SupplierProducts supplierProduct;
 
 
 //************************constructors**************************************************************************************

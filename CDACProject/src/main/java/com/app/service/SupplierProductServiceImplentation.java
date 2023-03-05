@@ -10,8 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.app.entities.Category;
 import com.app.entities.Product;
 import com.app.entities.SupplierProducts;
+import com.app.entities.User;
 import com.app.repository.CategoryDao;
+import com.app.repository.ProductDao;
 import com.app.repository.SupplierProductsDao;
+import com.app.repository.UserDao;
 
 @Service
 @Transactional
@@ -23,45 +26,66 @@ public class SupplierProductServiceImplentation implements SupplierProductsServi
 	private SupplierProductsDao supplierProductsRepo;
 	
 	@Autowired
-	private CategoryDao categoryRepo;
+	private ProductDao productRepo;
+	
+	@Autowired
+	private UserDao userRepo;
 
 	
-//*********************method implementation****************************************************************************	
+//*********************method implementation****************************************************************************
+	//GET ALL
 	@Override
 	public List<SupplierProducts> getAllSupplierProductsDetails() {	
 		return supplierProductsRepo.findAll();
 	}
 
+	
+	//GET BY ID
 	@Override
 	public Optional<SupplierProducts> getSupplierProductsDetails(Long supplierProductsId) {
 		return supplierProductsRepo.findById(supplierProductsId);
 	}
 
+	
+	//INSERT
 	@Override
 	public SupplierProducts addSupplierProductsDetails(SupplierProducts transientSupplierProduct) {
 		
-		//getting categoryId 
-		Long categoryId= transientSupplierProduct.getSupplierproductCategory().getId();
+		//getting productId & distributorID
+		Long productId= transientSupplierProduct.getProducts().getId();
+		Long distributorId= transientSupplierProduct.getDistributor().getId();
+		
 		
 		//getting persistent Category
-		Optional<Category> persistentCategory= categoryRepo.findById(categoryId);
+		Optional<Product> persistentProduct= productRepo.findById(productId);
+		Optional<User> persistentDistributor= userRepo.findById(distributorId);
+		
 		
 		//to avoid lazy initialization
-		persistentCategory.get().getCategoryName();
+		persistentDistributor.get().getFirstName();
 		
 		//getting SupplierProductList & binding
-		List<SupplierProducts> supplierproductsList = persistentCategory.get().getSupplierProductsList();
+		List<SupplierProducts> supplierproductsList = persistentDistributor.get().getSupplierProducts();
 		supplierproductsList.add(transientSupplierProduct);
-		persistentCategory.get().setSupplierProductsList(supplierproductsList);
+		persistentDistributor.get().setSupplierProducts(supplierproductsList);
+
+		//setting persistent object to transientSupplierProduct
+		transientSupplierProduct.setProducts(persistentProduct.get());
+		transientSupplierProduct.setDistributor(persistentDistributor.get());
+		
 		
 		return supplierProductsRepo.save(transientSupplierProduct);
 	}
 
+	
+	//UPDATE
 	@Override
 	public SupplierProducts updateSupplierProductsDetails(SupplierProducts detachedSupplierProducts) {
 		return supplierProductsRepo.save(detachedSupplierProducts);
 	}
 
+	
+	//DELETE
 	@Override
 	public String deleteSupplierProductsDetails(Long supplierProductsId) {
 		

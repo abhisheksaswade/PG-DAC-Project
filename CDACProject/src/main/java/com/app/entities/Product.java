@@ -39,6 +39,8 @@ public class Product extends BaseEntity{
 	
 	private int rating;
 	
+	private int partNumber;
+	
 
 //************************Entity Relations********************************************************************************
 	//Owning & Inverse entities are mentioned respectively

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.entities.MyOrder;
+import com.app.entities.OrderStatus;
 import com.app.service.MyOrderService;
 
 @RestController
@@ -56,6 +57,29 @@ public class MyOrderController {
 		{
 			return myOrderService.deleteMyOrderDetails(myOrderId);
 		}	
+		
+		
+//*********************custom method implementation for deliveryPerson****************************************************************************
+
+		//to get order to be deliver based on order status
+		@GetMapping("/orderlist/{deliveryPersonId}")
+		public List<MyOrder> deliveryPersonOrderList(@PathVariable Long deliveryPersonId)
+		{
+			String orderStatus= "INCART";
+			Enum orderStatusEnum= OrderStatus.valueOf(orderStatus);
+			return myOrderService.deliveryPersonOrdersByOrderStatus(deliveryPersonId, orderStatusEnum);
+			
+		}
+		
+		//to get order to be delivered by deliveryPerson based on order status
+		@GetMapping("/deliverylist/{deliveryPersonId}")
+		public List<MyOrder> deliveryPersonDeliveredList(@PathVariable Long deliveryPersonId)
+		{
+			String orderStatus= "INPROCESS";
+			Enum orderStatusEnum= OrderStatus.valueOf(orderStatus);
+			return myOrderService.deliveryPersonOrdersByOrderStatus(deliveryPersonId, orderStatusEnum);
+			
+		}
 		
 		
 }//End of MyOrderController

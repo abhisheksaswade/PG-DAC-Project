@@ -1,8 +1,16 @@
 package com.app.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,11 +39,21 @@ public class SupplierProducts extends BaseEntity{
 	
 //************************Entity Relations****************************************************************************************
 	//Owning & Inverse entities are mentioned respectively
-	//SupplierProduct & Category: for Category id
+	//SupplierProduct & Products: for Product id
+ 	 @ToString.Exclude
+  	 @OneToOne
+	 private Product products;
+ 	 
+ 	//ItemDetails & Supplier Products= for supplier products id 
+ 	@ToString.Exclude
+ 	@JsonIgnore
+ 	@OneToMany(mappedBy = "supplierProduct", cascade = CascadeType.ALL, orphanRemoval = true)
+ 	private  List<ItemDetails> itemDetailsList = new ArrayList();
+
+	//SupplierProduct & User: for User(distributor) id
 	@ToString.Exclude
 	@ManyToOne
-	@JoinColumn(name="category_id")
-	private Category supplierproductCategory;
-
+	@JoinColumn(name="distributor_id")
+	private User distributor;
 	
 }//End of S_Products

@@ -4,18 +4,33 @@ import java.util.List;
 import java.util.Optional;
 
 import com.app.entities.MyOrder;
+import com.app.entities.User;
 
 public interface MyOrderService {
-
+	
+	
+//********************* standard method declaration*****************************************************************
+	//GET ALL
 	public List<MyOrder> getAllMyOrderDetails();
 	
+	//GET BY ID
 	public Optional<MyOrder> getMyOrderDetails(Long myOrderId);
 	
+	//INSERT
 	public MyOrder addMyOrderDetails(MyOrder transientMyOrder);
 	
+	//UPDATE
 	public MyOrder updateMyOrderDetails(MyOrder detachedMyOrder);
 	
+	//DELETE
 	public String deleteMyOrderDetails(Long myOrderId);
+	
+	
+//---------------------Custom method declaration for Administrator-----------------------------------------------
+	
+	//to get order to be deliver/delivered by deliveryPerson based on order status
+	public List<MyOrder> deliveryPersonOrdersByOrderStatus(Long deliveryPerson, Enum orderStatus);
+	
 	
 }//End of MyOrderService
 	

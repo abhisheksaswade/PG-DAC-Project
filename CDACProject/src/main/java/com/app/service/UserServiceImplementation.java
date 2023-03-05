@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,34 +27,42 @@ public class UserServiceImplementation implements UserService {
 	@Autowired
 	private CategoryDao categoryRepo;
 	
-	
+	@Autowired
+	private PasswordEncoder enc;
+
+
 //*********************method implementation****************************************************************************
 	
-    //---------------------Standard method implementation-----------------------------------------------
+//---------------------Standard method implementation-----------------------------------------------
+	//GET ALL
 	@Override
 	public List<User> getAllUserDetails() {
 		return userRepo.findAll();
 	}
 	
 	
-	@Override
-	public User addUserDetails(User transientUser) {
-		return userRepo.save(transientUser);
-	}
-
-
+	//GET BY ID
 	@Override
 	public Optional<User> getUserDetails(Long userId) {
 		return userRepo.findById(userId);
 	}
 
+	
+	//INSERT
+	@Override
+	public User addUserDetails(User transientUser) {
+		//encrypt the pwd
+		transientUser.setPassword(enc.encode(transientUser.getPassword()));
+		return userRepo.save(transientUser);
+	}
 
+	//UPDATE
 	@Override
 	public User updateUserDetails(User detachedUser) {
 		return userRepo.save(detachedUser);
 	}
-
-
+	
+	//DELETE
 	@Override
 	public String deleteUserDetails(Long userId) {
 		
@@ -67,7 +76,7 @@ public class UserServiceImplementation implements UserService {
 	}
 
 	
-	//---------------------Custom method implementation-----------------------------------------------
+//---------------------Custom method implementation-----------------------------------------------
 	
 	//to get user list by roles
 	@Override
