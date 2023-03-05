@@ -22,11 +22,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 public class JWTRequestFilter extends OncePerRequestFilter {
+	
+
+//*********************dependency injection****************************************************************************		
 	@Autowired
 	private JwtUtils utils;
 	@Autowired
 	private UserDetailsService userDetailsService;
 
+	
+//********************* standard method implementation*****************************************************************	
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
@@ -62,4 +67,4 @@ public class JWTRequestFilter extends OncePerRequestFilter {
 
 	}
 
-}
+}//End of JWTRequestFilter

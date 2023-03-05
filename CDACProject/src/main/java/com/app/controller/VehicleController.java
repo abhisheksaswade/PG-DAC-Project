@@ -28,30 +28,40 @@ public class VehicleController {
 	
 	
 //*********************method implementation****************************************************************************		
+
+	//GET
 	@GetMapping
 	public List<Vehicle> getAllVehicle()
 	{
 		return vehicleService.getAllVehicleDetails();
 	}
 	
+	
+	//GET BY ID
 	@GetMapping("/{vehicleId}")
 	public Optional<Vehicle> getVehicle(@PathVariable Long vehicleId)
 	{
 		return vehicleService.getVehicleDetails(vehicleId);
 	}
 	
+	
+	//INSERT
 	@PostMapping("/add")
 	public Vehicle addVehicle(@RequestBody Vehicle transientVehicle)
 	{
 		return vehicleService.addVehicleDetails(transientVehicle);
 	}
 	
+	
+	//UPDATE
 	@PutMapping("/edit")
 	public Vehicle updateVehicle(@RequestBody Vehicle detachedVehicle)
 	{
 		return vehicleService.updateVehicleDetails(detachedVehicle);
 	}
 	
+	
+	//DELETE
 	@DeleteMapping("/{vehicleId}")
 	public String deleteVehicle(@PathVariable Long vehicleId)
 	{

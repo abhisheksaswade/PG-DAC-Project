@@ -27,30 +27,40 @@ public class SupplierProductsController {
 	
 	
 //*********************method implementation****************************************************************************	
+
+	//GET
 	@GetMapping
 	public List<SupplierProducts> getAllSupplierProducts()
 	{
 		return supplierProductsService.getAllSupplierProductsDetails();
 	}
 	
+	
+	//GET BY ID
 	@GetMapping("/{supplierProductsId}")
 	public Optional<SupplierProducts> getSupplierProducts(@PathVariable Long supplierProductsId)
 	{
 		return supplierProductsService.getSupplierProductsDetails(supplierProductsId);
 	}
 	
+	
+	//INSERT
 	@PostMapping
 	public SupplierProducts addSupplierProducts(@RequestBody SupplierProducts transientSupplierProducts)
 	{
 		return supplierProductsService.addSupplierProductsDetails(transientSupplierProducts);
 	}
 	
+	
+	//UPDATE
 	@PutMapping
 	public SupplierProducts updateSupplierProducts(@RequestBody SupplierProducts detachedSupplierProducts)
 	{
 		return supplierProductsService.updateSupplierProductsDetails(detachedSupplierProducts);
 	}
 	
+	
+	//DELETE
 	@DeleteMapping("/{supplierProductsId}")
 	public String deleteSupplierProducts(@PathVariable Long supplierProductsId)
 	{

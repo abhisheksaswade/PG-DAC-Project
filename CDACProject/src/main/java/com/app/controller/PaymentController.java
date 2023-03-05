@@ -27,30 +27,40 @@ public class PaymentController {
 	
 
 //*********************method implementation****************************************************************************	
+
+	//GET
 	@GetMapping
 	public List<Payment> getAllPaymentDetails()
 	{
 		return paymentService.getAllPaymentsDetails();
 	}
 	
+	
+	//GET BY ID
 	@GetMapping("/{paymentId}")
 	public Optional<Payment> getPayment(@PathVariable Long paymentId)
 	{
 		return paymentService.getPaymentsDetails(paymentId);
 	}
 	
+	
+	//INSERT
 	@PostMapping
 	public Payment addPayment(@RequestBody Payment transientPayment)
 	{
 		return paymentService.addPaymentDetails(transientPayment);
 	}
 	
+	
+	//UPDATE
 	@PutMapping
 	public Payment updatePayment(@RequestBody Payment detachedPayment)
 	{
 		return paymentService.updatePaymentDetails(detachedPayment);
 	}
 	
+	
+	//DELETE
 	@DeleteMapping("/{paymentId}")
 	public String deletePayment(@PathVariable Long paymentId)
 	{

@@ -12,8 +12,14 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class ApiResponse {
+	
+	
+//************************data members************************************************************************************	
 	private String message;
 	private LocalDateTime timeStamp;
+	
+	
+//************************Constructor************************************************************************************	
 	public ApiResponse(String message) {
 		super();
 		this.message = message;
@@ -21,4 +27,4 @@ public class ApiResponse {
 	}
 	
 
-}
+}//End of ApiResponse

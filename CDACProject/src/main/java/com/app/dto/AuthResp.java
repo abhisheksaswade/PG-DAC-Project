@@ -12,6 +12,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthResp {
+	
+	
+//************************data members************************************************************************************	
 	private String message;
 	private String jwt;
-}
+	
+}//End of AuthResp

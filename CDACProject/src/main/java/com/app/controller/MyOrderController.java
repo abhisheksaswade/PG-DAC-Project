@@ -28,30 +28,40 @@ public class MyOrderController {
 
 	
 //*********************method implementation****************************************************************************	
+		
+		//GET
 		@GetMapping
 		public List<MyOrder> getAllMyOrder()
 		{
 			return myOrderService.getAllMyOrderDetails();
 		}
 		
+		
+		//GET BY ID
 		@GetMapping("/{myOrderId}")
 		public Optional<MyOrder> getMyOrder(@PathVariable Long myOrderId)
 		{
 			return myOrderService.getMyOrderDetails(myOrderId);
 		}
 		
+		
+		//INSERT
 		@PostMapping
 		public MyOrder addMyOrder(@RequestBody MyOrder transientMyOrder)
 		{
 			return myOrderService.addMyOrderDetails(transientMyOrder);
 		}
 		
+		
+		//UPDATE
 		@PutMapping
 		public MyOrder updateMyOrder(@RequestBody MyOrder detachedMyOrder)
 		{
 			return myOrderService.updateMyOrderDetails(detachedMyOrder);
 		}
 		
+		
+		//DELETE
 		@DeleteMapping("/{myOrderId}")
 		public String deleteMyOrder(@PathVariable Long myOrderId)
 		{

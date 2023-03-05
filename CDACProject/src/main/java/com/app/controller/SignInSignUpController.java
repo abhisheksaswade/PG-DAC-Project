@@ -26,15 +26,24 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/auth")
 @Slf4j
 public class SignInSignUpController {
-//dep : JWT utils : for generating JWT
+
+	
+//*********************dependency injection****************************************************************************		
+	
+	//dep : JWT utils : for generating JWT
 	@Autowired
 	private JwtUtils utils;
+	
 	// dep : Auth mgr
 	@Autowired
 	private AuthenticationManager manager;
+	
 	// dep : user service for handling users
 	@Autowired
 	private UserService userService;
+
+	
+//*********************method implementation****************************************************************************		
 
 	// add a method to authenticate user . In case of success --send back token ,
 	// o.w
@@ -59,6 +68,7 @@ public class SignInSignUpController {
 		}
 	}
 
+
 	// add request handling method for user registration
 	@PostMapping("/signup")
 	public ResponseEntity<?> userRegistration(@RequestBody @Valid User user) {
@@ -66,4 +76,5 @@ public class SignInSignUpController {
 		// invoke service layer method , for saving : user info + associated roles info
 		return ResponseEntity.status(HttpStatus.CREATED).body(userService.addUserDetails(user));
 	}
-}
+	
+}//End of SignInSignUpController

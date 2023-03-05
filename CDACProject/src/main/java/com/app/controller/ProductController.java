@@ -31,11 +31,14 @@ public class ProductController {
 
 	
 //*********************method implementation****************************************************************************	
+	
+	//GET
 	@GetMapping("/view")
 	public List<Product> getAllProducts()
 	{
 		return productService.getAllProductDetails();
 	}
+	
 	
 	@GetMapping("/purchase")
 	public String purchaseProducts(Authentication auth) {
@@ -46,24 +49,32 @@ public class ProductController {
 		return sb.toString();
 	}
 	
+	
+	//GET BY ID
 	@GetMapping("/{productId}")
 	public Optional<Product> getProduct(@PathVariable Long productId)
 	{
 		return productService.getProductDetails(productId);
 	}
 	
+	
+	//INSERT
 	@PostMapping
 	public Product addProduct(@RequestBody Product transientProduct)
 	{
 		return productService.addProductDetails(transientProduct);
 	}
 	
+	
+	//UPDATE
 	@PutMapping
 	public Product updateProduct(@RequestBody Product detachedProduct)
 	{
 		return productService.updateProductDetails(detachedProduct);
 	}
 	
+	
+	//DELETE
 	@DeleteMapping("/{productId}")
 	public String deleteProduct(@PathVariable Long productId)
 	{

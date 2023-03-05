@@ -29,30 +29,35 @@ public class CategoryController {
 	
 //*********************method implementation****************************************************************************
 	
+	//GET
 	@GetMapping
 	public List<Category> getAllCategories()
 	{
 		return categoryService.getAllCategoryDetails();
 	}
 	
+	//GET BY ID
 	@GetMapping("/{categoryId}")
 	public Optional<Category> getCategory(@PathVariable Long categoryId)
 	{
 		return categoryService.getCategoryDetails(categoryId);
 	}
 	
+	//INSERT
 	@PostMapping
 	public Category addCategory(@RequestBody Category transientCategory)
 	{
 		return categoryService.addCategoryDetails(transientCategory);
 	}
 	
+	//UPDATE
 	@PutMapping
 	public Category updateCategory(@RequestBody Category detachedCategory)
 	{
 		return categoryService.updateCategoryDetails(detachedCategory);
 	}
 	
+	//DELETE
 	@DeleteMapping("/{categoryId}")
 	public String deleteUser(@PathVariable Long categoryId)
 	{

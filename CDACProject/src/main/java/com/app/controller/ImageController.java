@@ -27,30 +27,40 @@ public class ImageController {
 	
 
 //*********************method implementation****************************************************************************	
+
+	//GET
 	@GetMapping
 	public List<Image> getAllImages()
 	{
 		return imageService.getAllImageDetails();
 	}
+
 	
+	//GET BY ID
 	@GetMapping("/{imageId}")
 	public Optional<Image> getImage(@PathVariable Long imageId)
 	{
 		return imageService.getImageDetails(imageId);
 	}
+
 	
+	//INSERT
 	@PostMapping
 	public Image addImage(@RequestBody Image transientImage)
 	{
 		return imageService.addImageDetails(transientImage);
 	}
+
 	
+	//UPDATE
 	@PutMapping
 	public Image updateImage(@RequestBody Image detachedImage)
 	{
 		return imageService.updateImageDetails(detachedImage);
 	}
 	
+	
+	//DELETE
 	@DeleteMapping("/{imageId}")
 	public String deleteImage(@PathVariable Long imageId)
 	{

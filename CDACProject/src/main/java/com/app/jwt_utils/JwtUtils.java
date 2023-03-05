@@ -16,12 +16,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class JwtUtils {
 
+	
+//********************data members********************************************************************************************	
 	@Value("${SECRET_KEY}")
 	private String jwtSecret;
 
 	@Value("${EXP_TIMEOUT}")
 	private int jwtExpirationMs;
 
+	
+//*******************methods*****************************************************************************************	
 	// will be invoked by REST Controller(authentication controller) , upon
 	// successful authentication
 	public String generateJwtToken(Authentication authentication) {
@@ -42,11 +46,15 @@ public class JwtUtils {
 				.compact();// Actually builds the JWT and serializes it to a compact, URL-safe string
 	}
 
+	
+	
 	// this method will be invoked by our custom filter
 	public String getUserNameFromJwtToken(String token) {
 		return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
 	}
 
+	
+	
 	// this method will be invoked by our custom filter
 	public boolean validateJwtToken(String authToken) {
 		try {
@@ -61,4 +69,8 @@ public class JwtUtils {
 
 		return false;
 	}
-}
+	
+	
+	
+	
+}//End of JwtUtils

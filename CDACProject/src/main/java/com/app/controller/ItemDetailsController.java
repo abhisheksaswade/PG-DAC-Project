@@ -28,30 +28,36 @@ public class ItemDetailsController {
 
 	
 //*********************method implementation***************************************************************************
+
+	//GET
 	@GetMapping
 	public List<ItemDetails> getItemDetails()
 	{
 		return itemDetailsService.getAllItemDetailsDetails();
 	}
 	
+	//GET BY ID
 	@GetMapping("/{itemDetailsId}")
 	public Optional<ItemDetails> getItemDetails(@PathVariable Long itemDetailsId)
 	{
 		return itemDetailsService.getItemDetailsDetails(itemDetailsId);
 	}
 	
+	//INSERT
 	@PostMapping
 	public ItemDetails addItemDetails(@RequestBody ItemDetails transientItemDetails)
 	{
 		return itemDetailsService.addItemDetailsDetails(transientItemDetails);
 	}
 	
+	//UPDATE
 	@PutMapping
 	public ItemDetails updateItemDetails(@RequestBody ItemDetails detachedItemDetails)
 	{
 		return itemDetailsService.updateItemDetailsDetails(detachedItemDetails);
 	}
 	
+	//DELETE
 	@DeleteMapping("/{itemDetailsId}")
 	public String deleteItemDetails(@PathVariable Long itemDetailsId)
 	{

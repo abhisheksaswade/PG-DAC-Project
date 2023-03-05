@@ -23,16 +23,22 @@ import com.app.filters.JWTRequestFilter;
 @Configuration // mandatory
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig {
-
+	
+	
+//*****************dependency injection************************************************************************
 	@Autowired
 	private JWTRequestFilter filter;
-
+	
+	
+//*******************methods***********************************************************************************
+	
 	// configure BCryptPassword encode bean
 	@Bean
 	public PasswordEncoder encoder() {
 		return new BCryptPasswordEncoder();
 	}
-
+	
+	
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable().
@@ -59,6 +65,8 @@ public class WebSecurityConfig {
 
 		return http.build();
 	}
+	
+	
 
 	// configure auth mgr bean : to be used in Authentication REST controller
 	@Bean
@@ -66,4 +74,6 @@ public class WebSecurityConfig {
 		return config.getAuthenticationManager();
 	}
 
-}
+	
+	
+}//End of WebSecurityConfig

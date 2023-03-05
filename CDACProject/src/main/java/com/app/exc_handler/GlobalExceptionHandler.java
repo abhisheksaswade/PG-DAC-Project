@@ -20,6 +20,8 @@ import com.app.dto.ApiResponse;
 //ResponseEntityExceptionHandler => a base class , for handling methdo arg not valid type of excs
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
+	
+//************************ method implementation************************************************************************************	
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -36,4 +38,4 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage()));
 	}
 	
-}
+}//End of GlobalExceptionHandler

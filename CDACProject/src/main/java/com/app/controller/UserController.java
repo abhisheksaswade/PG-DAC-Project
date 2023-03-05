@@ -38,31 +38,39 @@ public class UserController {
 	
 //*********************method implementation****************************************************************************
 
-    //---------------------Standard method implementation-----------------------------------------------	
+//---------------------Standard method implementation-----------------------------------------------	
+	
+	//GET
 	@GetMapping
 	public List<User> getAllUsers()
 	{
 		return userService.getAllUserDetails();
 	}
 	
+	
+	//GET BY ID
 	@GetMapping("/{userId}")
 	public Optional<User> getUser(@PathVariable Long userId)
 	{
 		return userService.getUserDetails(userId);
 	}
 	
+	//INSERT
 	@PostMapping
 	public User addUser(@RequestBody User transientUser)
 	{
 		return userService.addUserDetails(transientUser);
 	}
 	
+	//UPDATE
 	@PutMapping
 	public User updateUser(@RequestBody User detachedUser)
 	{
 		return userService.updateUserDetails(detachedUser);
 	}
 	
+	
+	//DELETE
 	@DeleteMapping("/{userId}")
 	public String deleteUser(@PathVariable Long userId)
 	{
@@ -70,7 +78,7 @@ public class UserController {
 	}
 	
 	
-   //---------------------Custom method implementation for Administrator-----------------------------------------------
+//---------------------Custom method implementation for Administrator-----------------------------------------------
 	
 	//to get user list by roles
 	@GetMapping("/admin/{role}")
