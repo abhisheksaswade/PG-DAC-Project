@@ -43,6 +43,8 @@ public interface UserService {
 	//to Delete category by userID
 	public String deleteCategoryByUserIdAndCategory(Long userId, Category transientDeleteCategory);
 	
+	public Optional<User> getUser (String email);
+	
 	
 	
 }//End of UserService

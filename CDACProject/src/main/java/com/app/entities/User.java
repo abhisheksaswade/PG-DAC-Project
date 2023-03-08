@@ -81,5 +81,9 @@ public class User extends BaseEntity{
 		private List<SupplierProducts> supplierProducts = new ArrayList<SupplierProducts>();
 //************************constructors************************************************************************************
 
+
+
+
+		
 	
 }//End of User 

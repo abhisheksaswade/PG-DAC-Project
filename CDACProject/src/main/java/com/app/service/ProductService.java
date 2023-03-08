@@ -36,6 +36,17 @@ public interface ProductService {
 	
 	//to Delete vehicle by productID
 	public String deleteVehicleByProductIdAndVehicle(Long productId, Vehicle transientDeleteVehicle);
+
 	
+//---------------------Custom method declaration for Customer-----------------------------------------------
+	
+	//to get product by partNumber
+	public Product findByPartNumber(int PartNumber);
+	
+	//to get product by productName
+	public List<Product> findByProductName(String productName);
+	
+	//to get product list by categoryName
+	public List<Product> findByCategoryName(Category category);
 	
 }//End of ProductService

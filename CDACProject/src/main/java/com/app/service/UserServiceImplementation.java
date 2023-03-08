@@ -159,5 +159,13 @@ public class UserServiceImplementation implements UserService {
 		return "Category Deleted Succesfully....!";
 	}
 
+
+	@Override
+	public Optional<User> getUser(String email) {
+		
+		return userRepo.findByEmail(email);
+	}
+
+	
 	
 }//End of UserServiceImplementation

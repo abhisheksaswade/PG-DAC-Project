@@ -1,5 +1,7 @@
 package com.app.controller;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.app.dto.AuthRequest;
 import com.app.dto.AuthResp;
+import com.app.entities.Role;
 import com.app.entities.User;
 import com.app.jwt_utils.JwtUtils;
 import com.app.service.UserService;
@@ -25,6 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/auth")
 @Slf4j
+@CrossOrigin("http://localhost:3000/")
 public class SignInSignUpController {
 
 	
@@ -60,7 +65,23 @@ public class SignInSignUpController {
 			Authentication authenticatedDetails = manager.authenticate(authToken);
 			log.info("auth token again " + authenticatedDetails);
 			// => auth succcess
-			return ResponseEntity.ok(new AuthResp("Auth successful!", utils.generateJwtToken(authenticatedDetails)));
+			
+			Optional<User> loginuser = userService.getUser(request.getEmail());
+			
+			Role userRole = loginuser.get().getRole();
+			String userRoleString = userRole.name();
+			
+			if(userRoleString.equals("ROLE_ADMIN")) {
+				return ResponseEntity.ok(new AuthResp( "ROLE_ADMIN","Auth successful!", utils.generateJwtToken(authenticatedDetails)));
+			}
+			if(userRoleString.equals("ROLE_CUSTOMER")) {
+				return ResponseEntity.ok(new AuthResp( "ROLE_CUSTOMER","Auth successful!", utils.generateJwtToken(authenticatedDetails)));
+			}
+			if(userRoleString.equals("ROLE_DISTRIBUTOR")) {
+				return ResponseEntity.ok(new AuthResp( "ROLE_DISTRIBUTOR","Auth successful!", utils.generateJwtToken(authenticatedDetails)));
+			}
+	
+			return ResponseEntity.ok(new AuthResp("ROLE_DELIVERYPERSON", "Auth successful!", utils.generateJwtToken(authenticatedDetails)));
 		} catch (BadCredentialsException e) { // later replace this by a method in global exc handler
 			// send back err resp code
 			System.out.println("err " + e);
@@ -72,6 +93,7 @@ public class SignInSignUpController {
 	// add request handling method for user registration
 	@PostMapping("/signup")
 	public ResponseEntity<?> userRegistration(@RequestBody @Valid User user) {
+		System.out.println("PINCODE IS: "+ user.getAddress().getPincode());
 		System.out.println("in reg user : user " );
 		// invoke service layer method , for saving : user info + associated roles info
 		return ResponseEntity.status(HttpStatus.CREATED).body(userService.addUserDetails(user));

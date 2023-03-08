@@ -85,9 +85,23 @@ public class MyOrderController {
 		@GetMapping("/deliverylist/{deliveryPersonId}")
 		public List<MyOrder> deliveryPersonDeliveredList(@PathVariable Long deliveryPersonId)
 		{
-			String orderStatus= "INPROCESS";
-			Enum orderStatusEnum= OrderStatus.valueOf(orderStatus);
-			return myOrderService.deliveryPersonOrdersByOrderStatus(deliveryPersonId, orderStatusEnum);
+			return myOrderService.deliveryPersonOrdersByOrderStatus(deliveryPersonId, OrderStatus.INPROCESS);
+			
+		}
+		
+		//to get orderList by orderStatus= INCART
+		@GetMapping("/cartlist")
+		public List<MyOrder> getAllCarts()
+		{
+			return myOrderService.getByOrderStatus(OrderStatus.INCART);
+		}
+		
+		
+		@PutMapping("/order/{orderStatus}")
+		public String updateOrderStatus(@PathVariable String orderStatus, @RequestBody Long orderId)
+		{
+			OrderStatus orderStatusEnum= OrderStatus.valueOf(orderStatus);
+			return myOrderService.updateOrderStatus(orderStatusEnum, orderId);
 			
 		}
 		

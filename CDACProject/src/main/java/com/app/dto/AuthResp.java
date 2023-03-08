@@ -1,5 +1,7 @@
 package com.app.dto;
 
+import com.app.entities.Role;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +17,7 @@ public class AuthResp {
 	
 	
 //************************data members************************************************************************************	
+	private String role;
 	private String message;
 	private String jwt;
 	

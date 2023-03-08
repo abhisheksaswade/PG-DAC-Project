@@ -165,6 +165,27 @@ public class ProductServiceImplementation implements ProductService {
 		
 		return "Vehicle Deleted Succesfully....!";
 	}//End of deleteVehicleByProductIdAndVehicle
+
+
+//---------------------Custom method declaration for Customer-----------------------------------------------	
+	//to get Product by Part Number
+	@Override
+	public Product findByPartNumber(int PartNumber) {
+		return productRepo.findByPartNumber(PartNumber);
+	}
+
+	//to get Product by Product Name
+	@Override
+	public List<Product> findByProductName(String productName) {
+		return productRepo.findByProductName(productName);
+	}
+
+	
+	//to get Product List by Category Name
+	@Override
+	public List<Product> findByCategoryName(Category category) {
+		return productRepo.findByProductCategory(category);
+	}	
 	
 	
 }//End of ProductService

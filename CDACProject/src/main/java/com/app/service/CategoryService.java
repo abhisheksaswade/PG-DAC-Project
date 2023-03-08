@@ -24,5 +24,5 @@ public interface CategoryService {
 	//DELETE
 	public String deleteCategoryDetails(Long categoryId);
 	
-
+	
 }//End of CategoryService

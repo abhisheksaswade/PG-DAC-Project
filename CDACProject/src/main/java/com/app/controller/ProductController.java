@@ -82,7 +82,7 @@ public class ProductController {
 	}
 	
 	
-	 //---------------------Custom method implementation for Administrator-----------------------------------------------
+//---------------------Custom method implementation for Administrator-----------------------------------------------
 	//to get vehicle list by userId
 	@GetMapping("/admin/vehicleList/{productId}")
 	public List<Vehicle> getVehicleListByUserId(@PathVariable Long productId)
@@ -105,6 +105,29 @@ public class ProductController {
 	{
 		return productService.deleteVehicleByProductIdAndVehicle(productId, transientDeleteVehicle);
 	}
+	
 
+//---------------------Custom method implementation for Customer-----------------------------------------------	
+	//to get product by part number
+	@GetMapping("/Product/{partNumber}")
+	public Product findByPartNumber(@PathVariable int partNumber) 
+	{
+		return productService.findByPartNumber(partNumber);
+		
+	}
+
+	//to get Product by product name
+	@GetMapping("/productlist")
+	public List<Product> findByProductName(String productName)
+	{
+		return productService.findByProductName(productName);
+		
+	}
+	
+	@GetMapping("/category")
+	public List<Product> findByCategoryName(@RequestBody Category category){
+		return productService.findByCategoryName(category);
+	}
+	
 	
 }//End of ProductController

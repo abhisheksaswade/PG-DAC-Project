@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.app.entities.Category;
 import com.app.entities.MyOrder;
+import com.app.entities.OrderStatus;
 import com.app.entities.Product;
 import com.app.entities.User;
 import com.app.repository.MyOrderDao;
@@ -98,6 +99,22 @@ public class MyOrderServiceImplementation implements MyOrderService {
 		Optional<User> deliveryPerson= userRepo.findById(deliveryPersonId);
 		
 		return myOrderRepo.findByDeliveryPersonAndOrderStatus(deliveryPerson.get(), orderStatus);
+	}
+
+	//to get orderList by orderStatus
+	@Override
+	public List<MyOrder> getByOrderStatus(Enum orderStatus) {
+		return myOrderRepo.findByOrderStatus(orderStatus);
+	}
+
+	@Override
+	public String updateOrderStatus(OrderStatus orderStatusEnum,Long orderId) {
+		
+		//getting persistent myOrder
+		Optional<MyOrder> persistentMyOrder = myOrderRepo.findById(orderId);
+		persistentMyOrder.get().setOrderStatus(orderStatusEnum);
+		
+		return "Order Updated Successfully";
 	}
 	
 	

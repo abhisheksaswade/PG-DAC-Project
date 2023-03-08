@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.app.entities.MyOrder;
+import com.app.entities.OrderStatus;
 import com.app.entities.User;
 
 public interface MyOrderService {
@@ -31,6 +32,11 @@ public interface MyOrderService {
 	//to get order to be deliver/delivered by deliveryPerson based on order status
 	public List<MyOrder> deliveryPersonOrdersByOrderStatus(Long deliveryPerson, Enum orderStatus);
 	
+	//to get orderList by orderStatus
+	public List<MyOrder> getByOrderStatus(Enum orderStatus);
+	
+	//to update order by orderStatus
+	public String updateOrderStatus(OrderStatus orderStatusEnum, Long orderId);
 	
 }//End of MyOrderService
 	
