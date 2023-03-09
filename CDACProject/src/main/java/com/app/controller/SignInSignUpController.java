@@ -70,18 +70,19 @@ public class SignInSignUpController {
 			
 			Role userRole = loginuser.get().getRole();
 			String userRoleString = userRole.name();
+			Long userId= loginuser.get().getId();
 			
 			if(userRoleString.equals("ROLE_ADMIN")) {
-				return ResponseEntity.ok(new AuthResp( "ROLE_ADMIN","Auth successful!", utils.generateJwtToken(authenticatedDetails)));
+				return ResponseEntity.ok(new AuthResp(userId,"ROLE_ADMIN","Auth successful!", utils.generateJwtToken(authenticatedDetails)));
 			}
 			if(userRoleString.equals("ROLE_CUSTOMER")) {
-				return ResponseEntity.ok(new AuthResp( "ROLE_CUSTOMER","Auth successful!", utils.generateJwtToken(authenticatedDetails)));
+				return ResponseEntity.ok(new AuthResp(userId,"ROLE_CUSTOMER","Auth successful!", utils.generateJwtToken(authenticatedDetails)));
 			}
 			if(userRoleString.equals("ROLE_DISTRIBUTOR")) {
-				return ResponseEntity.ok(new AuthResp( "ROLE_DISTRIBUTOR","Auth successful!", utils.generateJwtToken(authenticatedDetails)));
+				return ResponseEntity.ok(new AuthResp( userId,"ROLE_DISTRIBUTOR","Auth successful!", utils.generateJwtToken(authenticatedDetails)));
 			}
 	
-			return ResponseEntity.ok(new AuthResp("ROLE_DELIVERYPERSON", "Auth successful!", utils.generateJwtToken(authenticatedDetails)));
+			return ResponseEntity.ok(new AuthResp(userId,"ROLE_DELIVERYPERSON", "Auth successful!", utils.generateJwtToken(authenticatedDetails)));
 		} catch (BadCredentialsException e) { // later replace this by a method in global exc handler
 			// send back err resp code
 			System.out.println("err " + e);

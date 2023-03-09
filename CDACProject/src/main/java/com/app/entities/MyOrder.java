@@ -61,9 +61,14 @@ public class MyOrder extends BaseEntity{
 	@JsonIgnore
 	@OneToMany(mappedBy = "myorder", cascade = CascadeType.ALL, orphanRemoval = true)
 	private  List<ItemDetails> itemDetailsList = new ArrayList();
-	
+
 	
 //************************constructors*************************************************************************************
 
-
+	public MyOrder(OrderStatus orderStatus, User customer) {
+		super();
+		this.orderStatus = orderStatus;
+		this.customer = customer;
+	}
+	
 }//End of MyOrder

@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import com.app.service.ProductService;
 
 @RestController
 @RequestMapping("/products")
+@CrossOrigin("http://localhost:3000/")
 public class ProductController {
 	
 
@@ -124,6 +126,7 @@ public class ProductController {
 		
 	}
 	
+	//find by category name
 	@GetMapping("/category")
 	public List<Product> findByCategoryName(@RequestBody Category category){
 		return productService.findByCategoryName(category);

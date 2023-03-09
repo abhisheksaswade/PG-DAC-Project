@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import com.app.service.MyOrderService;
 
 @RestController
 @RequestMapping("/myorder")
+@CrossOrigin("http://localhost:3000/")
 public class MyOrderController {
 
 	
@@ -75,7 +77,7 @@ public class MyOrderController {
 		@GetMapping("/orderlist/{deliveryPersonId}")
 		public List<MyOrder> deliveryPersonOrderList(@PathVariable Long deliveryPersonId)
 		{
-			String orderStatus= "INCART";
+			String orderStatus= "INPROCESS";
 			Enum orderStatusEnum= OrderStatus.valueOf(orderStatus);
 			return myOrderService.deliveryPersonOrdersByOrderStatus(deliveryPersonId, orderStatusEnum);
 			
@@ -85,7 +87,7 @@ public class MyOrderController {
 		@GetMapping("/deliverylist/{deliveryPersonId}")
 		public List<MyOrder> deliveryPersonDeliveredList(@PathVariable Long deliveryPersonId)
 		{
-			return myOrderService.deliveryPersonOrdersByOrderStatus(deliveryPersonId, OrderStatus.INPROCESS);
+			return myOrderService.deliveryPersonOrdersByOrderStatus(deliveryPersonId, OrderStatus.DELIVERED);
 			
 		}
 		
@@ -104,6 +106,14 @@ public class MyOrderController {
 			return myOrderService.updateOrderStatus(orderStatusEnum, orderId);
 			
 		}
-		
+//*********************custom method implementation for deliveryPerson****************************************************************************
+
+		//to get order to be deliver based on order status
+		@GetMapping("/cart/{customerId}")
+		public MyOrder customerCart(@PathVariable Long customerId)
+		{			
+			return myOrderService.cartOrder(customerId, OrderStatus.INCART);
+					
+		}		
 		
 }//End of MyOrderController

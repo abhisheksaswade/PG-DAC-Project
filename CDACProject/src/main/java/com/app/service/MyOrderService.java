@@ -38,5 +38,10 @@ public interface MyOrderService {
 	//to update order by orderStatus
 	public String updateOrderStatus(OrderStatus orderStatusEnum, Long orderId);
 	
+
+//---------------------Custom method declaration for Customer-----------------------------------------------
+	//to get cart by customerId & order status
+	public MyOrder cartOrder(Long customerId, OrderStatus orderStatus);
+	
 }//End of MyOrderService
 	

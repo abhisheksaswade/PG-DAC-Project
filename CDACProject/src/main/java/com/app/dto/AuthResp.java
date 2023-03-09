@@ -17,6 +17,7 @@ public class AuthResp {
 	
 	
 //************************data members************************************************************************************	
+	private Long id;
 	private String role;
 	private String message;
 	private String jwt;

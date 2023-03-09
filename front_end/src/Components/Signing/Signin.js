@@ -57,23 +57,24 @@ const Signin = (props) => {
         .then(response => {
           console.log(response.data);
           console.log("Role"+response.data.role)
+          console.log("Id"+response.data.id)
           if(response.data.role.includes("ROLE_CUSTOMER")){
-            sessionStorage.setItem("customer",JSON.stringify(response.data))
+            sessionStorage.setItem("user",JSON.stringify(response.data))
             navigate(`/Customer`);
           }
 
           if(response.data.role.includes("ROLE_DISTRIBUTOR")){
-            sessionStorage.setItem("distributor",JSON.stringify(response.data))
+            sessionStorage.setItem("user",JSON.stringify(response.data))
             navigate(`/Distributor`);
           }
 
           if(response.data.role.includes("ROLE_ADMIN")){
-            sessionStorage.setItem("admin",JSON.stringify(response.data))
+            sessionStorage.setItem("user",JSON.stringify(response.data))
             navigate(`/Admin`);
           }
 
           if(response.data.role.includes("ROLE_DELIVERYPERSON")){
-            sessionStorage.setItem("deliveryperson",JSON.stringify(response.data))
+            sessionStorage.setItem("user",JSON.stringify(response.data))
             navigate(`/Deliveryperson`);
           }
 

@@ -1,10 +1,12 @@
 package com.app.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.app.entities.MyOrder;
+import com.app.entities.OrderStatus;
 import com.app.entities.User;
 
 public interface MyOrderDao extends JpaRepository<MyOrder, Long> {
@@ -15,5 +17,7 @@ public interface MyOrderDao extends JpaRepository<MyOrder, Long> {
 	//to get orderList by orderStatus
 	public List<MyOrder> findByOrderStatus(Enum orderStatus); 
 
+	//to get cart by customerId & order status
+	public Optional<MyOrder> findByCustomerAndOrderStatus(User customer, OrderStatus orderStatus);
 	
 }//End of MyOrderDao

@@ -1,5 +1,8 @@
 package com.app.service;
 
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,15 +59,15 @@ public class MyOrderServiceImplementation implements MyOrderService {
 		
 		
 		//getting List & binding
-		List<MyOrder> myOrderList = persistentCustomer.get().getMyOrder_C();
-		myOrderList.add(transientMyOrder);
-		persistentCustomer.get().setMyOrder_C(myOrderList);
+//		List<MyOrder> myOrderList = persistentCustomer.get().getMyOrder_C();
+//		myOrderList.add(transientMyOrder);
+//		persistentCustomer.get().setMyOrder_C(myOrderList);
 		
 		transientMyOrder.setCustomer(persistentCustomer.get());
 		
-		List<MyOrder> myOrderList2 = persistentDeliveryPerson.get().getMyOrder_D();
-		myOrderList.add(transientMyOrder);
-		persistentDeliveryPerson.get().setMyOrder_D(myOrderList);
+//		List<MyOrder> myOrderList2 = persistentDeliveryPerson.get().getMyOrder_D();
+//		myOrderList.add(transientMyOrder);
+//		persistentDeliveryPerson.get().setMyOrder_D(myOrderList);
 		
 		transientMyOrder.setDeliveryPerson(persistentDeliveryPerson.get());
 		
@@ -90,7 +93,7 @@ public class MyOrderServiceImplementation implements MyOrderService {
 		
 	}
 	
-//---------------------Custom method declaration for Administrator-----------------------------------------------
+//---------------------Custom method implementation for Administrator-----------------------------------------------
 	
 	//to get order to be deliver/delivered by deliveryPerson based on order status
 	@Override
@@ -115,6 +118,32 @@ public class MyOrderServiceImplementation implements MyOrderService {
 		persistentMyOrder.get().setOrderStatus(orderStatusEnum);
 		
 		return "Order Updated Successfully";
+	}
+
+	
+//---------------------Custom method implementation for Customer-----------------------------------------------	
+	
+	//to get cart order by customer and ordrStatus
+	
+	@Override
+	public MyOrder cartOrder(Long customerId, OrderStatus orderStatus) {
+		User persistentCustomer = userRepo.findById(customerId).get();
+		boolean result= myOrderRepo.findByCustomerAndOrderStatus(persistentCustomer, orderStatus).isPresent();
+		 
+		 if(result)
+		 {
+			 MyOrder oldCart= myOrderRepo.findByCustomerAndOrderStatus(persistentCustomer, orderStatus).get();
+			 oldCart.setOrderDate(LocalDate.now());
+             oldCart.setDeliveryDate(LocalDate.now().plusDays(7)); 
+			return oldCart; 
+		 }
+		 else
+		 {
+			 MyOrder newCart = new MyOrder(OrderStatus.INCART, persistentCustomer);
+			 newCart.setOrderDate(LocalDate.now());
+             newCart.setDeliveryDate(LocalDate.now().plusDays(7)); 
+			return myOrderRepo.save(newCart); 
+		 }
 	}
 	
 	
