@@ -17,7 +17,7 @@ public interface MyOrderDao extends JpaRepository<MyOrder, Long> {
 	//to get orderList by orderStatus
 	public List<MyOrder> findByOrderStatus(Enum orderStatus); 
 
-	//to get cart by customerId & order status
-	public Optional<MyOrder> findByCustomerAndOrderStatus(User customer, OrderStatus orderStatus);
-	
+	//to get cart/MyOrderList by customerId & order status
+	public List<MyOrder> findByCustomerAndOrderStatus(User customer, OrderStatus orderStatus);
+		
 }//End of MyOrderDao

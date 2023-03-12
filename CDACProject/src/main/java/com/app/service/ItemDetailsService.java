@@ -23,5 +23,12 @@ public interface ItemDetailsService {
 	
 	//DELETE
 	public String deleteItemDetailsDetails(Long itemDetailsId);
+	
 
+//********************* Custom method declaration for Customer*****************************************************************	
+
+	//find items by order id
+	public List<ItemDetails> getAllItemsByOrderId(Long OrderId);
+	
+	
 }//End of ItemDetailsService

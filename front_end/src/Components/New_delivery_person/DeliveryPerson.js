@@ -8,7 +8,7 @@ function DeliveryPerson() {
 
       <Delivery_Navbar/>
       <User_info/>
-      <h2>DeliveryPerson</h2>
+
       
       </div>
   )

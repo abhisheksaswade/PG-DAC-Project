@@ -1,9 +1,9 @@
 import React from 'react'
 import Carousel from "react-bootstrap/Carousel";
 
-import image1 from "./Images/SIGNA 4625.jpg";
-import image2 from "./Images/signa-4625s-1660020245.jpg";
-import image3 from "./Images/tata.jpg";
+import image1 from './Images/tata parts.jpg'
+import image2 from "./Images/tata cluch.jpeg";
+import image3 from "./Images/air filter.jpeg";
 
 import Menu from './Menu'
 
@@ -24,7 +24,6 @@ const Homepage = () => {
           <Carousel.Item>
             <img className="d-block w-100" src={image2} alt="Second slide" style={{ height: "400px" }} />
             <Carousel.Caption>
-          <h1>abhishek</h1>
 
             </Carousel.Caption>
           </Carousel.Item>

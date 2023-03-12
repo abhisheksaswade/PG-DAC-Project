@@ -10,10 +10,9 @@ const Customer = (props) => {
   return (
     <div>   
         <Customer_navbar/>
-        <User_info/>
+        <User_info/><br/><br/>
         {/* <Search_product/> */}
         <ProductList></ProductList>
-        <h2>Customer</h2>
     </div>
   )
 }

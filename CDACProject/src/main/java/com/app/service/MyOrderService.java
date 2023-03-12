@@ -43,5 +43,8 @@ public interface MyOrderService {
 	//to get cart by customerId & order status
 	public MyOrder cartOrder(Long customerId, OrderStatus orderStatus);
 	
+	//to get myOrderList by customerId & order status
+	public List<MyOrder> myOrderList(Long customerId, OrderStatus orderStatus);
+	
 }//End of MyOrderService
 	

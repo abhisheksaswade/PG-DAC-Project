@@ -2,6 +2,7 @@ package com.app.entities;
 
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -40,13 +41,13 @@ public class Payment extends BaseEntity{
 	
 	//Owning & Inverse entities are mentioned respectively	
 	//Payment & MyOrder = for order_id
-	@JsonIgnore
+	//@JsonIgnore
 	@ToString.Exclude
 	@OneToOne
 	private MyOrder myOrder;
 
 
 //************************constructors************************************************************************************
-
+		
 	
 }//End of Payment

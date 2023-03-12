@@ -13,9 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.app.entities.Category;
 import com.app.entities.MyOrder;
 import com.app.entities.OrderStatus;
+import com.app.entities.Payment;
+import com.app.entities.PaymentMode;
+import com.app.entities.PaymentStatus;
 import com.app.entities.Product;
 import com.app.entities.User;
 import com.app.repository.MyOrderDao;
+import com.app.repository.PaymentDao;
 import com.app.repository.UserDao;
 
 @Service
@@ -30,17 +34,22 @@ public class MyOrderServiceImplementation implements MyOrderService {
 	@Autowired
 	private UserDao userRepo;
 	
+	@Autowired
+	private PaymentDao paymentRepo;
 //*********************method implementation****************************************************************************	
+	//GET ALL
 	@Override
 	public List<MyOrder> getAllMyOrderDetails() {
 		return myOrderRepo.findAll();
 	}
 
+	//GET BY ID
 	@Override
 	public Optional<MyOrder> getMyOrderDetails(Long myOrderId) {
 		return myOrderRepo.findById(myOrderId);
 	}
 
+	//INSERT
 	@Override
 	public MyOrder addMyOrderDetails(MyOrder transientMyOrder) {
 		
@@ -54,8 +63,8 @@ public class MyOrderServiceImplementation implements MyOrderService {
 		
 		
 		//to avoid lazy initialization
-		persistentCustomer.get().getFirstName();
-		persistentDeliveryPerson.get().getFirstName();
+//		persistentCustomer.get().getFirstName();
+//		persistentDeliveryPerson.get().getFirstName();
 		
 		
 		//getting List & binding
@@ -70,21 +79,26 @@ public class MyOrderServiceImplementation implements MyOrderService {
 //		persistentDeliveryPerson.get().setMyOrder_D(myOrderList);
 		
 		transientMyOrder.setDeliveryPerson(persistentDeliveryPerson.get());
-		
-		
+				
 		return myOrderRepo.save(transientMyOrder);
 	}
 
+	
+	//UPDATE
 	@Override
 	public MyOrder updateMyOrderDetails(MyOrder detachedMyOrder) {
 		return myOrderRepo.save(detachedMyOrder);
 	}
 
+	//DELETE
 	@Override
 	public String deleteMyOrderDetails(Long myOrderId) {
+		Optional<MyOrder> persistentMyOrder = myOrderRepo.findById(myOrderId);
 
-		if(myOrderRepo.existsById(myOrderId))
+		if(persistentMyOrder.isPresent())
 		{
+			Payment persistentPayment = paymentRepo.findByMyOrder(persistentMyOrder.get());
+			paymentRepo.delete(persistentPayment);
 			myOrderRepo.deleteById(myOrderId);
 			return "User Sucessfully Deleted......";
 		}
@@ -92,6 +106,7 @@ public class MyOrderServiceImplementation implements MyOrderService {
 		return "User Deletion Failed......";
 		
 	}
+	
 	
 //---------------------Custom method implementation for Administrator-----------------------------------------------
 	
@@ -110,6 +125,8 @@ public class MyOrderServiceImplementation implements MyOrderService {
 		return myOrderRepo.findByOrderStatus(orderStatus);
 	}
 
+	
+	//to update orderStatus
 	@Override
 	public String updateOrderStatus(OrderStatus orderStatusEnum,Long orderId) {
 		
@@ -123,16 +140,16 @@ public class MyOrderServiceImplementation implements MyOrderService {
 	
 //---------------------Custom method implementation for Customer-----------------------------------------------	
 	
-	//to get cart order by customer and ordrStatus
+	//to get CART order by customer and ordrStatus
 	
 	@Override
 	public MyOrder cartOrder(Long customerId, OrderStatus orderStatus) {
 		User persistentCustomer = userRepo.findById(customerId).get();
-		boolean result= myOrderRepo.findByCustomerAndOrderStatus(persistentCustomer, orderStatus).isPresent();
+		boolean result= myOrderRepo.findByCustomerAndOrderStatus(persistentCustomer, orderStatus).isEmpty();
 		 
-		 if(result)
+		 if(!result)
 		 {
-			 MyOrder oldCart= myOrderRepo.findByCustomerAndOrderStatus(persistentCustomer, orderStatus).get();
+			 MyOrder oldCart= myOrderRepo.findByCustomerAndOrderStatus(persistentCustomer, orderStatus).get(0);
 			 oldCart.setOrderDate(LocalDate.now());
              oldCart.setDeliveryDate(LocalDate.now().plusDays(7)); 
 			return oldCart; 
@@ -141,9 +158,19 @@ public class MyOrderServiceImplementation implements MyOrderService {
 		 {
 			 MyOrder newCart = new MyOrder(OrderStatus.INCART, persistentCustomer);
 			 newCart.setOrderDate(LocalDate.now());
-             newCart.setDeliveryDate(LocalDate.now().plusDays(7)); 
+             newCart.setDeliveryDate(LocalDate.now().plusDays(7));
+
+             //hardcoring deliveryperson for testing...make sure to reset if deleted or working with new database.
+             User persistentDeliveryPerson= userRepo.findById((long) 8).get();
+             newCart.setDeliveryPerson(persistentDeliveryPerson);
 			return myOrderRepo.save(newCart); 
 		 }
+	}
+
+	@Override
+	public List<MyOrder> myOrderList(Long customerId, OrderStatus orderStatus) {
+		User persistentCustomer = userRepo.findById(customerId).get();
+		return myOrderRepo.findByCustomerAndOrderStatus(persistentCustomer, orderStatus);
 	}
 	
 	

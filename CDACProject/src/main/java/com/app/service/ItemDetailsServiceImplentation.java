@@ -52,31 +52,43 @@ public class ItemDetailsServiceImplentation implements ItemDetailsService {
 		Long supplierProductsId = transientItemDetails.getSupplierProduct().getId();
 		
 		//getting Persistent object of MyOrder & SupplierProducts
-		Optional<MyOrder> persistentMyorder = myOrderRepo.findById(myorderId);
-		Optional<SupplierProducts> persistentSupplierProducts = supplierProductsRepo.findById(supplierProductsId);
+		MyOrder persistentMyorder = myOrderRepo.findById(myorderId).get();
+		SupplierProducts persistentSupplierProducts = supplierProductsRepo.findById(supplierProductsId).get();
 		
 		//to avoid lazy initialization
-		persistentMyorder.get().getCustomer();
-		persistentSupplierProducts.get().getQuantity();
+//		persistentMyorder.get().getCustomer();
+//		persistentSupplierProducts.get().getQuantity();
 		
 		//getting ItemList and Binding
 //		List<ItemDetails> itemDetailsList = persistentMyorder.get().getItemDetailsList();
 //		itemDetailsList.add(transientItemDetails);
 //		persistentMyorder.get().setItemDetailsList(itemDetailsList);
-
-		//
-		transientItemDetails.setMyorder(persistentMyorder.get());
-		
-		
+	
 		//getting ItemList and Binding
 //		List<ItemDetails> itemDetailsList2 = persistentSupplierProducts.get().getItemDetailsList();
 //		itemDetailsList2.add(transientItemDetails);
 //		persistentSupplierProducts.get().setItemDetailsList(itemDetailsList2);
 		
-		//
-		transientItemDetails.setSupplierProduct(persistentSupplierProducts.get());
-		
-		return itemDetailsRepo.save(transientItemDetails);
+		//if item already in cart or new
+		if(itemDetailsRepo.findByMyorderAndSupplierProduct(persistentMyorder, persistentSupplierProducts).isPresent())
+		{
+			ItemDetails persistentItemDetails = itemDetailsRepo.findByMyorderAndSupplierProduct(persistentMyorder, persistentSupplierProducts).get();
+			persistentItemDetails.setQuantity(persistentItemDetails.getQuantity()+1);
+			persistentItemDetails.setPrice((persistentItemDetails.getQuantity())*(persistentSupplierProducts.getFinalPrice()));
+			persistentMyorder.setOrderPrice(persistentMyorder.getOrderPrice()+persistentSupplierProducts.getFinalPrice());
+			persistentSupplierProducts.setQuantity(persistentSupplierProducts.getQuantity()-1);
+			return itemDetailsRepo.save(persistentItemDetails);
+		}
+		else
+		{
+			transientItemDetails.setMyorder(persistentMyorder);
+			transientItemDetails.setSupplierProduct(persistentSupplierProducts);
+			transientItemDetails.setPrice(persistentSupplierProducts.getFinalPrice());
+			persistentMyorder.setOrderPrice(persistentMyorder.getOrderPrice()+persistentSupplierProducts.getFinalPrice());
+			persistentSupplierProducts.setQuantity(persistentSupplierProducts.getQuantity()-1);
+			return itemDetailsRepo.save(transientItemDetails);
+		}
+
 	}
 
 	//UPDATE
@@ -90,12 +102,30 @@ public class ItemDetailsServiceImplentation implements ItemDetailsService {
 	public String deleteItemDetailsDetails(Long itemDetailsId) {
 
 		if(itemDetailsRepo.existsById(itemDetailsId))
-		{
+		{			
+			
+			ItemDetails persistentItemDetails = itemDetailsRepo.findById(itemDetailsId).get();
+			
+			Long supplierProductsId = persistentItemDetails.getSupplierProduct().getId();
+			SupplierProducts persistentSupplierProducts = supplierProductsRepo.findById(supplierProductsId).get();
+			persistentSupplierProducts.setQuantity(persistentSupplierProducts.getQuantity()+ persistentItemDetails.getQuantity());
+			
+			MyOrder persistentMyOrder= persistentItemDetails.getMyorder();
+			persistentMyOrder.setOrderPrice(persistentMyOrder.getOrderPrice()-persistentItemDetails.getPrice());
+			
 			itemDetailsRepo.deleteById(itemDetailsId);
 			return "ItemDetails Sucessfully Deleted......";
 		}
 
 		return "ItemDetails Deletion Failed......";
+	}
+//********************* Custom method declaration for Customer*****************************************************************
+
+	//find items by order id
+	@Override
+	public List<ItemDetails> getAllItemsByOrderId(Long OrderId) {
+		MyOrder persistentMyOrder= myOrderRepo.findById(OrderId).get();
+		return itemDetailsRepo.findByMyorder(persistentMyOrder);
 	}
 	
 	

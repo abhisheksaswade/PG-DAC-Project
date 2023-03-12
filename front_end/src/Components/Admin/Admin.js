@@ -8,7 +8,7 @@ const Admin = () => {
       
       <Admin_navbar/>
       <User_info/>
-      <h2>Admin</h2>
+
 
     </div>
   )

@@ -3,6 +3,7 @@ package com.app.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.app.entities.MyOrder;
 import com.app.entities.Payment;
 
 public interface PaymentService {
@@ -24,4 +25,13 @@ public interface PaymentService {
 	//DELETE
 	public String deletePaymentDetails(Long paymentId);
 
+	
+//********************* Custom method implementation method declaration*****************************************************************	
+
+	//get payment by order id
+	public Payment getPaymentByOrder(Long orderId);
+	
+	//to make payment with mode & order
+	public Payment updatePaymentByModeAndOrder(Payment transientPayment);
+	
 }//End of PaymentService

@@ -99,14 +99,13 @@ public class MyOrderController {
 		}
 		
 		
-		@PutMapping("/order/{orderStatus}")
-		public String updateOrderStatus(@PathVariable String orderStatus, @RequestBody Long orderId)
+		@PutMapping("/orderdelivered/{orderId}")
+		public String updateDeliverOrderStatus(@PathVariable Long orderId)
 		{
-			OrderStatus orderStatusEnum= OrderStatus.valueOf(orderStatus);
-			return myOrderService.updateOrderStatus(orderStatusEnum, orderId);
+			return myOrderService.updateOrderStatus(OrderStatus.DELIVERED, orderId);
 			
 		}
-//*********************custom method implementation for deliveryPerson****************************************************************************
+//*********************custom method implementation for customer****************************************************************************
 
 		//to get order to be deliver based on order status
 		@GetMapping("/cart/{customerId}")
@@ -114,6 +113,33 @@ public class MyOrderController {
 		{			
 			return myOrderService.cartOrder(customerId, OrderStatus.INCART);
 					
-		}		
+		}	
+		
+		//to place an order
+		@PutMapping("/orderplace/{orderId}")
+		public String updatePlaceOrderStatus(@PathVariable Long orderId)
+		{
+			return myOrderService.updateOrderStatus(OrderStatus.INPROCESS, orderId);
+			
+		}
+		
+		
+		//to get myOrderList(INPROCESS) based on order status
+		@GetMapping("/mycurrentorders/{customerId}")
+		public List<MyOrder> myCurrentOrderList(@PathVariable Long customerId)
+		{			
+			return myOrderService.myOrderList(customerId, OrderStatus.INPROCESS);
+					
+		}	
+		
+		//to get myOrderList(DELIVERED) based on order status
+		@GetMapping("/orderhistory/{customerId}")
+		public List<MyOrder> myOrderHistoryList(@PathVariable Long customerId)
+		{			
+			return myOrderService.myOrderList(customerId, OrderStatus.DELIVERED);
+					
+		}	
+		
+		
 		
 }//End of MyOrderController

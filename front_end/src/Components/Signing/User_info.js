@@ -30,12 +30,11 @@ function User_info() {
 
 
   return (
-
-    <div className="container" style={{ marginBottom: "50px" }}>
-                <div className="row my-3">
-                    <h2 className="">Welcome, {data.firstName} {data.lastName}</h2>
-                </div>
+    <div>
+      <h3>Welcome,  {data.firstName} {data.lastName}</h3>
+      <hr />
     </div>
+
   )
 }
 

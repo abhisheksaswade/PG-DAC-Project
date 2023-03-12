@@ -40,8 +40,8 @@ import Dist_orderhistory from './Components/Distributor/Dist_orderhistory'
 
 import Customer from './Components/Customer/Customer'
 import Customer_cart from './Components/Customer/Customer_cart'
-
-
+import Customer_order from './Components/Customer/Customer_order'
+import Order_history from './Components/Customer/Order_history'
 
 
 function App() {
@@ -89,6 +89,8 @@ function App() {
 
       <Route path="/customer"element={<Customer/>}></Route>
       <Route path="/customer/cart"element={<Customer_cart/>}></Route>
+      <Route path="/customer/myorders"element={<Customer_order/>}></Route>
+      <Route path="/customer/myorderhistory"element={<Order_history/>}></Route>
 
 
       </Routes>
