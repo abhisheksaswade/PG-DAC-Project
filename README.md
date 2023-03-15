@@ -1,4 +1,7 @@
 # PG-DAC-Project
 Project name is Online E-Spare Store
 
-homepage.jpg
+
+## Screenshots
+- Home Page /  
+![](Documentation/screenshots/admin homepage.jpg)
