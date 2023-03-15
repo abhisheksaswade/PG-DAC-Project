@@ -42,5 +42,5 @@ Project name is Online E-Spare Store
 - Admin Homepage
 ![Alt text](Documentation/screenshots/admin%20homepage.jpg)
 
-- Admin list display
+- Customer list display
 ![Alt text](Documentation/screenshots/admin%20list%20display.jpg)
