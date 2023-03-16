@@ -1,6 +1,8 @@
-# PG-DAC-Project
-Project name is Online E-Spare Store
-
+# Online E-Spare Store
+This is a modern web-based platform designed to buy spare part by small retailers directly from wholesaler distributor. In earlier days shopkeeper get the products from the chain of 2 to 3 dealers due to which retailers get very less margin on that product. This platform establishes direct relationship between official distributor and retailer. 
+Additionally, all the business operations like placing orders, payment on customer side, managing products,
+stock on distributor side, managing delivery updates on delivery-person side now can be done very easily in few clicks. Administrator now can easily monitor entire chain of business operations online
+and if necessary, improve on it.
 
 ## Screenshots
 - Home Page   
@@ -44,3 +46,11 @@ Project name is Online E-Spare Store
 
 - Customer list display
 ![Alt text](Documentation/screenshots/admin%20list%20display.jpg)
+
+## Future Scope
+• Association with Google maps
+• Discount /offer management
+• Billing
+
+## Support
+For support email abhisheksaswade125@gmail.com
