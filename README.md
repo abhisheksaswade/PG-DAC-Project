@@ -48,9 +48,9 @@ and if necessary, improve on it.
 ![Alt text](Documentation/screenshots/admin%20list%20display.jpg)
 
 ## Future Scope
-• Association with Google maps
-• Discount /offer management
-• Billing
+- Association with Google maps
+- Discount /offer management
+- Billing
 
 ## Support
 For support, email abhisheksaswade125@gmail.com
