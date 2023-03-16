@@ -50,7 +50,8 @@ and if necessary, improve on it.
 ## Future Scope
 - Association with Google maps
 - Discount /offer management
-- Billing
+- email service integration
+- payment gateway integration
 
 ## Support
 For support, email abhisheksaswade125@gmail.com
