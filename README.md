@@ -52,6 +52,3 @@ and if necessary, improve on it.
 - Discount /offer management
 - email service integration
 - payment gateway integration
-
-## Support
-For support, email abhisheksaswade125@gmail.com
